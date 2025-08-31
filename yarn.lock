@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@bearz/path@npm:@jsr/bearz__path":
+  version "0.0.0"
+  resolved "https://npm.jsr.io/~/11/@jsr/bearz__path/0.0.0.tgz#3AA0A3101C56DAA112944A96E419B8FB7B79DC90"
+  integrity sha512-Hx+I7nsXCd0X28fmHfdmt377cRsmpZIGfLdOwjRRMcUiqaQTiz86J5flVDIpgcQm+tKuJZRyaqhQZnqEURVwRw==
+  dependencies:
+    "@jsr/bearz__chars" "^0.1.0"
+
 "@discordjs/builders@^1.6.3":
   version "1.11.3"
   resolved "https://registry.yarnpkg.com/@discordjs/builders/-/builders-1.11.3.tgz#14b8b027e16b73136924faecaf1819b94711647c"
@@ -161,6 +168,11 @@
   version "0.25.9"
   resolved "https://registry.yarnpkg.com/@esbuild/win32-x64/-/win32-x64-0.25.9.tgz#585624dc829cfb6e7c0aa6c3ca7d7e6daa87e34f"
   integrity sha512-PPOl1mi6lpLNQxnGoyAfschAodRFYXJ+9fs6WHXz7CSWKbOqiMZsubC+BQsVKuul+3vKLuwTHsS2c2y9EoKwxQ==
+
+"@jsr/bearz__chars@^0.1.0":
+  version "0.1.0"
+  resolved "https://npm.jsr.io/~/11/@jsr/bearz__chars/0.1.0.tgz#8C243ECA4E294D158330CCE1371504C3EEAA317C"
+  integrity sha512-OHTuXMUOjvtSzewwlZS8ADjBHMXLGqhGOMYjLA9KCK4AUFZXwbCekPw9jxzrvG14Iu602+yupOmK1cd9C8GdVQ==
 
 "@minhducsun2002/leb128@^1.0.0":
   version "1.0.0"

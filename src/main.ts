@@ -1,4 +1,4 @@
 import './style.css'
-import { loadPage } from "./router.ts";
+import { goto } from "./router.ts";
 
-loadPage('index')
+goto(document.location.pathname)

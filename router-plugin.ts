@@ -35,8 +35,12 @@ export default function myPlugin() {
 
 				let i = 0;
 				for (const [route, path] of routes) {
-					routeImports.push(`import _${i} from ${JSON.stringify(pathl.join(root, path))};
+					if (path.endsWith('html'))
+						routeImports.push(`import _${i} from ${JSON.stringify(pathl.join(root, path))};
 routeContents[${JSON.stringify(route)}] = _${i};`);
+// 					else
+// 						routeImports.push(`import * as _${i} from ${JSON.stringify(pathl.join(root, path))};
+// routeContents[${JSON.stringify(route)}] = _${i};`);
 					i++;
 				}
 				return `export const routes = ${JSON.stringify(routes)};
