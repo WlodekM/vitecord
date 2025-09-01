@@ -24,12 +24,13 @@ export default function myPlugin() {
 	return {
 		name: 'my-plugin', // required, will show up in warnings and errors
 		resolveId(id) {
+			console.log(id)
 			if (id === virtualModuleId) {
 				return resolvedVirtualModuleId
 			}
 		},
 		load(id) {
-			// console.log('load', id)
+			console.log('load', id)
 			if (id === resolvedVirtualModuleId) {
 				const routeImports: string[] = [];
 

@@ -15,6 +15,7 @@
   "dependencies": {
     "@bearz/path": "npm:@jsr/bearz__path",
     "@types/node": "^24.3.0",
-    "discord.js-selfbot-v13": "^3.7.0"
+    "discord.js-selfbot-v13": "^3.7.0",
+    "vite-plugin-node-polyfills": "^0.24.0"
   }
 }
