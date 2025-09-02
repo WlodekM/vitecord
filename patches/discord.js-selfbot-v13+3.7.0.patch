@@ -1,3 +1,40 @@
+diff --git a/node_modules/discord.js-selfbot-v13/src/WebSocket.js b/node_modules/discord.js-selfbot-v13/src/WebSocket.js
+index efbd6f9..560ff25 100644
+--- a/node_modules/discord.js-selfbot-v13/src/WebSocket.js
++++ b/node_modules/discord.js-selfbot-v13/src/WebSocket.js
+@@ -8,7 +8,7 @@ try {
+   if (!erlpack.pack) erlpack = null;
+ } catch {} // eslint-disable-line no-empty
+ 
+-exports.WebSocket = require('ws');
++exports.WebSocket = WebSocket;//require('ws');
+ 
+ const ab = new TextDecoder();
+ 
+diff --git a/node_modules/discord.js-selfbot-v13/src/client/Client.js b/node_modules/discord.js-selfbot-v13/src/client/Client.js
+index 0ed94d0..c4e2927 100644
+--- a/node_modules/discord.js-selfbot-v13/src/client/Client.js
++++ b/node_modules/discord.js-selfbot-v13/src/client/Client.js
+@@ -95,8 +95,8 @@ class Client extends BaseClient {
+      * Shard helpers for the client (only if the process was spawned from a {@link ShardingManager})
+      * @type {?ShardClientUtil}
+      */
+-    this.shard = process.env.SHARDING_MANAGER
+-      ? ShardClientUtil.singleton(this, process.env.SHARDING_MANAGER_MODE)
++    this.shard = process?.env?.SHARDING_MANAGER
++      ? ShardClientUtil.singleton(this, process?.env?.SHARDING_MANAGER_MODE)
+       : null;
+ 
+     /**
+@@ -171,7 +171,7 @@ class Client extends BaseClient {
+     this.settings = new ClientUserSettingManager(this);
+ 
+     Object.defineProperty(this, 'token', { writable: true });
+-    if (!this.token && 'DISCORD_TOKEN' in process.env) {
++    if (!this.token && 'DISCORD_TOKEN' in (process?.env ?? {})) {
+       /**
+        * Authorization token for the logged in bot.
+        * If present, this defaults to `process.env.DISCORD_TOKEN` when instantiating the client
 diff --git a/node_modules/discord.js-selfbot-v13/src/util/Options.js b/node_modules/discord.js-selfbot-v13/src/util/Options.js
 index 8b98688..43d4b69 100644
 --- a/node_modules/discord.js-selfbot-v13/src/util/Options.js

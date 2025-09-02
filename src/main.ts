@@ -3,6 +3,7 @@ import { goto } from "./router.ts";
 import { redirUrl } from './stores.ts';
 window.process = {
 	...(window?.process??{}),
+	//@ts-ignore:
 	versions: {
 		...(window?.process?.versions??{}),
 		node: '23.5.0',

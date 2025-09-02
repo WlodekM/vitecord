@@ -16,7 +16,8 @@ export default defineConfig({
 				'crypto',
 				'timers',
 				'timers/promises',
-				'process'
+				'process',
+				'http'
 			],
 			globals: { global: true, process: true },
 			protocolImports: true,
