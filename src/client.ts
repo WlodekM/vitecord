@@ -1,4 +1,7 @@
 // console.log(require, 'a')
-import { Client } from "discord.js-selfbot-v13";
+console.log(process.env)
+if (!process.env)
+	process.env = {}
+const { Client } = await import("discord.js-selfbot-v13");
 
 export default new Client();

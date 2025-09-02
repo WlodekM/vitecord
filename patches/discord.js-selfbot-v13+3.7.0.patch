@@ -1,0 +1,12 @@
+diff --git a/node_modules/discord.js-selfbot-v13/src/util/Options.js b/node_modules/discord.js-selfbot-v13/src/util/Options.js
+index 8b98688..43d4b69 100644
+--- a/node_modules/discord.js-selfbot-v13/src/util/Options.js
++++ b/node_modules/discord.js-selfbot-v13/src/util/Options.js
+@@ -1,6 +1,6 @@
+ 'use strict';
+ 
+-const { randomUUID } = require('node:crypto');
++const { v4: randomUUID } = require('uuid');
+ const { UserAgent } = require('./Constants');
+ const Intents = require('./Intents');
+ 

@@ -1,35 +1,37 @@
 import { defineConfig } from 'vite'
 import router from './router-plugin.ts'
 import { nodePolyfills } from 'vite-plugin-node-polyfills'
+// import rollupNodePolyFill from "rollup-plugin-node-polyfills";
 
 // https://vitejs.dev/config/
 export default defineConfig({
 	plugins: [
 		nodePolyfills({
-			// To add only specific polyfills, add them here. If no option is passed, adds all polyfills
-			// include: [
-			// 	'util',
-			// ],
-			// To exclude specific polyfills, add them to this list. Note: if include is provided, this has no effect
-			exclude: [
-				// 'http', // Excludes the polyfill for `http` and `node:http`.
+			include: [
 				'util',
-				'fs'
+				'events',
+				'http2',
+				'stream',
+				'buffer',
+				'crypto',
+				'timers',
+				'timers/promises',
+				'process'
 			],
-			// Whether to polyfill specific globals.
-			globals: {
-				// Buffer: true, // can also be 'build', 'dev', or false
-				// global: true,
-				// process: true,
-			},
-			// Override the default polyfills for specific modules.
-			overrides: {
-				// Since `fs` is not supported in browsers, we can use the `memfs` package to polyfill it.
-				// fs: 'memfs',
-			},
-			// Whether to polyfill `node:` protocol imports.
+			globals: { global: true, process: true },
 			protocolImports: true,
 		}),
-		router()
+		router(),
+		// rollupNodePolyFill({})
 	],
+	resolve: {
+		alias: {
+			//FIXME: this \/
+            util: 'node_modules/rollup-plugin-node-polyfills/polyfills/util.js',
+            'util/types': 'node_modules/rollup-plugin-node-polyfills/polyfills/util.js',
+            'node:util': 'node_modules/rollup-plugin-node-polyfills/polyfills/util.js',
+            'node:util/types': 'node_modules/rollup-plugin-node-polyfills/polyfills/util.js',
+            'stream': 'node_modules/rollup-plugin-node-polyfills/polyfills/stream.js',
+		}
+	}
 })

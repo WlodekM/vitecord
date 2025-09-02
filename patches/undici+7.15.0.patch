@@ -1,0 +1,451 @@
+diff --git a/node_modules/undici/lib/api/api-connect.js b/node_modules/undici/lib/api/api-connect.js
+index c8b86dd..a3c7b2a 100644
+--- a/node_modules/undici/lib/api/api-connect.js
++++ b/node_modules/undici/lib/api/api-connect.js
+@@ -1,12 +1,12 @@
+ 'use strict'
+ 
+ const assert = require('node:assert')
+-const { AsyncResource } = require('node:async_hooks')
++// const { AsyncResource } = require('node:async_hooks')
+ const { InvalidArgumentError, SocketError } = require('../core/errors')
+ const util = require('../core/util')
+ const { addSignal, removeSignal } = require('./abort-signal')
+ 
+-class ConnectHandler extends AsyncResource {
++class ConnectHandler {
+   constructor (opts, callback) {
+     if (!opts || typeof opts !== 'object') {
+       throw new InvalidArgumentError('invalid opts')
+@@ -22,7 +22,7 @@ class ConnectHandler extends AsyncResource {
+       throw new InvalidArgumentError('signal must be an EventEmitter or EventTarget')
+     }
+ 
+-    super('UNDICI_CONNECT')
++    // super('UNDICI_CONNECT')
+ 
+     this.opaque = opaque || null
+     this.responseHeaders = responseHeaders || null
+diff --git a/node_modules/undici/lib/api/api-pipeline.js b/node_modules/undici/lib/api/api-pipeline.js
+index 77f3520..2665d23 100644
+--- a/node_modules/undici/lib/api/api-pipeline.js
++++ b/node_modules/undici/lib/api/api-pipeline.js
+@@ -6,7 +6,7 @@ const {
+   PassThrough
+ } = require('node:stream')
+ const assert = require('node:assert')
+-const { AsyncResource } = require('node:async_hooks')
++// const { AsyncResource } = require('node:async_hooks')
+ const {
+   InvalidArgumentError,
+   InvalidReturnValueError,
+@@ -61,7 +61,7 @@ class PipelineResponse extends Readable {
+   }
+ }
+ 
+-class PipelineHandler extends AsyncResource {
++class PipelineHandler {
+   constructor (opts, handler) {
+     if (!opts || typeof opts !== 'object') {
+       throw new InvalidArgumentError('invalid opts')
+@@ -85,7 +85,7 @@ class PipelineHandler extends AsyncResource {
+       throw new InvalidArgumentError('invalid onInfo callback')
+     }
+ 
+-    super('UNDICI_PIPELINE')
++    // super('UNDICI_PIPELINE')
+ 
+     this.opaque = opaque || null
+     this.responseHeaders = responseHeaders || null
+diff --git a/node_modules/undici/lib/api/api-request.js b/node_modules/undici/lib/api/api-request.js
+index 9ae7ed6..7000b4a 100644
+--- a/node_modules/undici/lib/api/api-request.js
++++ b/node_modules/undici/lib/api/api-request.js
+@@ -1,14 +1,14 @@
+ 'use strict'
+ 
+ const assert = require('node:assert')
+-const { AsyncResource } = require('node:async_hooks')
++// const { AsyncResource } = require('node:async_hooks')
+ const { Readable } = require('./readable')
+ const { InvalidArgumentError, RequestAbortedError } = require('../core/errors')
+ const util = require('../core/util')
+ 
+ function noop () {}
+ 
+-class RequestHandler extends AsyncResource {
++class RequestHandler {
+   constructor (opts, callback) {
+     if (!opts || typeof opts !== 'object') {
+       throw new InvalidArgumentError('invalid opts')
+@@ -37,7 +37,7 @@ class RequestHandler extends AsyncResource {
+         throw new InvalidArgumentError('invalid onInfo callback')
+       }
+ 
+-      super('UNDICI_REQUEST')
++      // super('UNDICI_REQUEST')
+     } catch (err) {
+       if (util.isStream(body)) {
+         util.destroy(body.on('error', noop), err)
+diff --git a/node_modules/undici/lib/api/api-stream.js b/node_modules/undici/lib/api/api-stream.js
+index 5d0b3fb..2d911c1 100644
+--- a/node_modules/undici/lib/api/api-stream.js
++++ b/node_modules/undici/lib/api/api-stream.js
+@@ -2,14 +2,14 @@
+ 
+ const assert = require('node:assert')
+ const { finished } = require('node:stream')
+-const { AsyncResource } = require('node:async_hooks')
++// const { AsyncResource } = require('node:async_hooks')
+ const { InvalidArgumentError, InvalidReturnValueError } = require('../core/errors')
+ const util = require('../core/util')
+ const { addSignal, removeSignal } = require('./abort-signal')
+ 
+ function noop () {}
+ 
+-class StreamHandler extends AsyncResource {
++class StreamHandler {
+   constructor (opts, factory, callback) {
+     if (!opts || typeof opts !== 'object') {
+       throw new InvalidArgumentError('invalid opts')
+@@ -38,7 +38,7 @@ class StreamHandler extends AsyncResource {
+         throw new InvalidArgumentError('invalid onInfo callback')
+       }
+ 
+-      super('UNDICI_STREAM')
++      // super('UNDICI_STREAM')
+     } catch (err) {
+       if (util.isStream(body)) {
+         util.destroy(body.on('error', noop), err)
+diff --git a/node_modules/undici/lib/api/api-upgrade.js b/node_modules/undici/lib/api/api-upgrade.js
+index f6efdc9..d3e21a8 100644
+--- a/node_modules/undici/lib/api/api-upgrade.js
++++ b/node_modules/undici/lib/api/api-upgrade.js
+@@ -1,12 +1,12 @@
+ 'use strict'
+ 
+ const { InvalidArgumentError, SocketError } = require('../core/errors')
+-const { AsyncResource } = require('node:async_hooks')
++// const { AsyncResource } = require('node:async_hooks')
+ const assert = require('node:assert')
+ const util = require('../core/util')
+ const { addSignal, removeSignal } = require('./abort-signal')
+ 
+-class UpgradeHandler extends AsyncResource {
++class UpgradeHandler {
+   constructor (opts, callback) {
+     if (!opts || typeof opts !== 'object') {
+       throw new InvalidArgumentError('invalid opts')
+@@ -22,7 +22,7 @@ class UpgradeHandler extends AsyncResource {
+       throw new InvalidArgumentError('signal must be an EventEmitter or EventTarget')
+     }
+ 
+-    super('UNDICI_UPGRADE')
++    // super('UNDICI_UPGRADE')
+ 
+     this.responseHeaders = responseHeaders || null
+     this.opaque = opaque || null
+diff --git a/node_modules/undici/lib/core/diagnostics.js b/node_modules/undici/lib/core/diagnostics.js
+index 224a5c4..394f0ec 100644
+--- a/node_modules/undici/lib/core/diagnostics.js
++++ b/node_modules/undici/lib/core/diagnostics.js
+@@ -1,6 +1,23 @@
+ 'use strict'
+ 
+-const diagnosticsChannel = require('node:diagnostics_channel')
++// const diagnosticsChannel = require('node:diagnostics_channel')
++/** @type {typeof diagnosticsChannel} */
++const polyfill = {
++  channel() {
++    return {
++      bindStore() {},
++      hasSubscribers: false,
++      name: '',
++      publish() {},
++      runStores() {
++        return {}
++      },
++      unbindStore() {
++        return true
++      }
++    }
++  }
++}
+ const util = require('node:util')
+ 
+ const undiciDebugLog = util.debuglog('undici')
+@@ -9,24 +26,24 @@ const websocketDebuglog = util.debuglog('websocket')
+ 
+ const channels = {
+   // Client
+-  beforeConnect: diagnosticsChannel.channel('undici:client:beforeConnect'),
+-  connected: diagnosticsChannel.channel('undici:client:connected'),
+-  connectError: diagnosticsChannel.channel('undici:client:connectError'),
+-  sendHeaders: diagnosticsChannel.channel('undici:client:sendHeaders'),
++  beforeConnect: polyfill.channel('undici:client:beforeConnect'),
++  connected: polyfill.channel('undici:client:connected'),
++  connectError: polyfill.channel('undici:client:connectError'),
++  sendHeaders: polyfill.channel('undici:client:sendHeaders'),
+   // Request
+-  create: diagnosticsChannel.channel('undici:request:create'),
+-  bodySent: diagnosticsChannel.channel('undici:request:bodySent'),
+-  bodyChunkSent: diagnosticsChannel.channel('undici:request:bodyChunkSent'),
+-  bodyChunkReceived: diagnosticsChannel.channel('undici:request:bodyChunkReceived'),
+-  headers: diagnosticsChannel.channel('undici:request:headers'),
+-  trailers: diagnosticsChannel.channel('undici:request:trailers'),
+-  error: diagnosticsChannel.channel('undici:request:error'),
++  create: polyfill.channel('undici:request:create'),
++  bodySent: polyfill.channel('undici:request:bodySent'),
++  bodyChunkSent: polyfill.channel('undici:request:bodyChunkSent'),
++  bodyChunkReceived: polyfill.channel('undici:request:bodyChunkReceived'),
++  headers: polyfill.channel('undici:request:headers'),
++  trailers: polyfill.channel('undici:request:trailers'),
++  error: polyfill.channel('undici:request:error'),
+   // WebSocket
+-  open: diagnosticsChannel.channel('undici:websocket:open'),
+-  close: diagnosticsChannel.channel('undici:websocket:close'),
+-  socketError: diagnosticsChannel.channel('undici:websocket:socket_error'),
+-  ping: diagnosticsChannel.channel('undici:websocket:ping'),
+-  pong: diagnosticsChannel.channel('undici:websocket:pong')
++  open: polyfill.channel('undici:websocket:open'),
++  close: polyfill.channel('undici:websocket:close'),
++  socketError: polyfill.channel('undici:websocket:socket_error'),
++  ping: polyfill.channel('undici:websocket:ping'),
++  pong: polyfill.channel('undici:websocket:pong')
+ }
+ 
+ let isTrackingClientEvents = false
+@@ -38,7 +55,7 @@ function trackClientEvents (debugLog = undiciDebugLog) {
+ 
+   isTrackingClientEvents = true
+ 
+-  diagnosticsChannel.subscribe('undici:client:beforeConnect',
++  polyfill.subscribe('undici:client:beforeConnect',
+     evt => {
+       const {
+         connectParams: { version, protocol, port, host }
+@@ -52,7 +69,7 @@ function trackClientEvents (debugLog = undiciDebugLog) {
+       )
+     })
+ 
+-  diagnosticsChannel.subscribe('undici:client:connected',
++  polyfill.subscribe('undici:client:connected',
+     evt => {
+       const {
+         connectParams: { version, protocol, port, host }
+@@ -66,7 +83,7 @@ function trackClientEvents (debugLog = undiciDebugLog) {
+       )
+     })
+ 
+-  diagnosticsChannel.subscribe('undici:client:connectError',
++  polyfill.subscribe('undici:client:connectError',
+     evt => {
+       const {
+         connectParams: { version, protocol, port, host },
+@@ -82,7 +99,7 @@ function trackClientEvents (debugLog = undiciDebugLog) {
+       )
+     })
+ 
+-  diagnosticsChannel.subscribe('undici:client:sendHeaders',
++  polyfill.subscribe('undici:client:sendHeaders',
+     evt => {
+       const {
+         request: { method, path, origin }
+@@ -100,7 +117,7 @@ function trackRequestEvents (debugLog = undiciDebugLog) {
+ 
+   isTrackingRequestEvents = true
+ 
+-  diagnosticsChannel.subscribe('undici:request:headers',
++  polyfill.subscribe('undici:request:headers',
+     evt => {
+       const {
+         request: { method, path, origin },
+@@ -115,7 +132,7 @@ function trackRequestEvents (debugLog = undiciDebugLog) {
+       )
+     })
+ 
+-  diagnosticsChannel.subscribe('undici:request:trailers',
++  polyfill.subscribe('undici:request:trailers',
+     evt => {
+       const {
+         request: { method, path, origin }
+@@ -123,7 +140,7 @@ function trackRequestEvents (debugLog = undiciDebugLog) {
+       debugLog('trailers received from %s %s%s', method, origin, path)
+     })
+ 
+-  diagnosticsChannel.subscribe('undici:request:error',
++  polyfill.subscribe('undici:request:error',
+     evt => {
+       const {
+         request: { method, path, origin },
+@@ -148,7 +165,7 @@ function trackWebSocketEvents (debugLog = websocketDebuglog) {
+ 
+   isTrackingWebSocketEvents = true
+ 
+-  diagnosticsChannel.subscribe('undici:websocket:open',
++  polyfill.subscribe('undici:websocket:open',
+     evt => {
+       const {
+         address: { address, port }
+@@ -156,7 +173,7 @@ function trackWebSocketEvents (debugLog = websocketDebuglog) {
+       debugLog('connection opened %s%s', address, port ? `:${port}` : '')
+     })
+ 
+-  diagnosticsChannel.subscribe('undici:websocket:close',
++  polyfill.subscribe('undici:websocket:close',
+     evt => {
+       const { websocket, code, reason } = evt
+       debugLog(
+@@ -167,31 +184,31 @@ function trackWebSocketEvents (debugLog = websocketDebuglog) {
+       )
+     })
+ 
+-  diagnosticsChannel.subscribe('undici:websocket:socket_error',
++  polyfill.subscribe('undici:websocket:socket_error',
+     err => {
+       debugLog('connection errored - %s', err.message)
+     })
+ 
+-  diagnosticsChannel.subscribe('undici:websocket:ping',
++  polyfill.subscribe('undici:websocket:ping',
+     evt => {
+       debugLog('ping received')
+     })
+ 
+-  diagnosticsChannel.subscribe('undici:websocket:pong',
++  polyfill.subscribe('undici:websocket:pong',
+     evt => {
+       debugLog('pong received')
+     })
+ }
+ 
+-if (undiciDebugLog.enabled || fetchDebuglog.enabled) {
+-  trackClientEvents(fetchDebuglog.enabled ? fetchDebuglog : undiciDebugLog)
+-  trackRequestEvents(fetchDebuglog.enabled ? fetchDebuglog : undiciDebugLog)
+-}
++// if (undiciDebugLog.enabled || fetchDebuglog.enabled) {
++//   trackClientEvents(fetchDebuglog.enabled ? fetchDebuglog : undiciDebugLog)
++//   trackRequestEvents(fetchDebuglog.enabled ? fetchDebuglog : undiciDebugLog)
++// }
+ 
+-if (websocketDebuglog.enabled) {
+-  trackClientEvents(undiciDebugLog.enabled ? undiciDebugLog : websocketDebuglog)
+-  trackWebSocketEvents(websocketDebuglog)
+-}
++// if (websocketDebuglog.enabled) {
++//   trackClientEvents(undiciDebugLog.enabled ? undiciDebugLog : websocketDebuglog)
++//   trackWebSocketEvents(websocketDebuglog)
++// }
+ 
+ module.exports = {
+   channels
+diff --git a/node_modules/undici/lib/dispatcher/client-h2.js b/node_modules/undici/lib/dispatcher/client-h2.js
+index 661d857..d26e553 100644
+--- a/node_modules/undici/lib/dispatcher/client-h2.js
++++ b/node_modules/undici/lib/dispatcher/client-h2.js
+@@ -39,7 +39,8 @@ let extractBody
+ /** @type {import('http2')} */
+ let http2
+ try {
+-  http2 = require('node:http2')
++  // http2 = require('node:http2')
++  throw 'test'
+ } catch {
+   // @ts-ignore
+   http2 = { constants: {} }
+diff --git a/node_modules/undici/lib/web/fetch/body.js b/node_modules/undici/lib/web/fetch/body.js
+index 73c4b2e..8bcf00e 100644
+--- a/node_modules/undici/lib/web/fetch/body.js
++++ b/node_modules/undici/lib/web/fetch/body.js
+@@ -12,7 +12,7 @@ const { FormData, setFormDataState } = require('./formdata')
+ const { webidl } = require('../webidl')
+ const assert = require('node:assert')
+ const { isErrored, isDisturbed } = require('node:stream')
+-const { isArrayBuffer } = require('node:util/types')
++// const { isArrayBuffer } = require('node:util/types')
+ const { serializeAMimeType } = require('./data-url')
+ const { multipartFormDataParser } = require('./formdata-parser')
+ const { createDeferredPromise } = require('../../util/promise')
+@@ -110,7 +110,7 @@ function extractBody (object, keepalive = false) {
+ 
+     // Set type to `application/x-www-form-urlencoded;charset=UTF-8`.
+     type = 'application/x-www-form-urlencoded;charset=UTF-8'
+-  } else if (isArrayBuffer(object)) {
++  } else if (object instanceof ArrayBuffer) {
+     // BufferSource/ArrayBuffer
+ 
+     // Set source to a copy of the bytes held by object.
+diff --git a/node_modules/undici/lib/web/fetch/util.js b/node_modules/undici/lib/web/fetch/util.js
+index d71126c..17fc7f3 100644
+--- a/node_modules/undici/lib/web/fetch/util.js
++++ b/node_modules/undici/lib/web/fetch/util.js
+@@ -8,7 +8,7 @@ const { collectASequenceOfCodePoints, collectAnHTTPQuotedString, removeChars, pa
+ const { performance } = require('node:perf_hooks')
+ const { ReadableStreamFrom, isValidHTTPToken, normalizedMethodRecordsBase } = require('../../core/util')
+ const assert = require('node:assert')
+-const { isUint8Array } = require('node:util/types')
++// const { isUint8Array } = require('node:util/types')
+ const { webidl } = require('../webidl')
+ 
+ function responseURL (response) {
+@@ -1039,7 +1039,7 @@ async function readAllBytes (reader, successSteps, failureSteps) {
+ 
+       // 1. If chunk is not a Uint8Array object, call failureSteps
+       //    with a TypeError and abort these steps.
+-      if (!isUint8Array(chunk)) {
++      if (!(chunk instanceof Uint8Array)) {
+         failureSteps(new TypeError('Received non-Uint8Array chunk'))
+         return
+       }
+diff --git a/node_modules/undici/lib/web/websocket/stream/websocketstream.js b/node_modules/undici/lib/web/websocket/stream/websocketstream.js
+index e7a8bce..7c4c4c5 100644
+--- a/node_modules/undici/lib/web/websocket/stream/websocketstream.js
++++ b/node_modules/undici/lib/web/websocket/stream/websocketstream.js
+@@ -6,7 +6,7 @@ const { states, opcodes, sentCloseFrameState } = require('../constants')
+ const { webidl } = require('../../webidl')
+ const { getURLRecord, isValidSubprotocol, isEstablished, utf8Decode } = require('../util')
+ const { establishWebSocketConnection, failWebsocketConnection, closeWebSocketConnection } = require('../connection')
+-const { isArrayBuffer } = require('node:util/types')
++// const { isArrayBuffer } = require('node:util/types')
+ const { channels } = require('../../../core/diagnostics')
+ const { WebsocketFrameSend } = require('../frame')
+ const { ByteParser } = require('../receiver')
+@@ -210,7 +210,7 @@ class WebSocketStream {
+     let opcode = null
+ 
+     // 4. If chunk is a BufferSource ,
+-    if (ArrayBuffer.isView(chunk) || isArrayBuffer(chunk)) {
++    if (ArrayBuffer.isView(chunk) || chunk instanceof ArrayBuffer) {
+       // 4.1. Set data to a copy of the bytes given chunk .
+       data = new Uint8Array(ArrayBuffer.isView(chunk) ? new Uint8Array(chunk.buffer, chunk.byteOffset, chunk.byteLength) : chunk)
+ 
+diff --git a/node_modules/undici/lib/web/websocket/websocket.js b/node_modules/undici/lib/web/websocket/websocket.js
+index 1f10cb0..dd4294b 100644
+--- a/node_modules/undici/lib/web/websocket/websocket.js
++++ b/node_modules/undici/lib/web/websocket/websocket.js
+@@ -1,6 +1,6 @@
+ 'use strict'
+ 
+-const { isArrayBuffer } = require('node:util/types')
++// const { isArrayBuffer } = require('node:util/types')
+ const { webidl } = require('../webidl')
+ const { URLSerializer } = require('../fetch/data-url')
+ const { environmentSettingsObject } = require('../fetch/util')
+@@ -257,7 +257,7 @@ class WebSocket extends EventTarget {
+       this.#sendQueue.add(buffer, () => {
+         this.#bufferedAmount -= buffer.byteLength
+       }, sendHints.text)
+-    } else if (isArrayBuffer(data)) {
++    } else if (data instanceof ArrayBuffer) {
+       // If the WebSocket connection is established, and the WebSocket
+       // closing handshake has not yet started, then the user agent must
+       // send a WebSocket Message comprised of data using a binary frame
+@@ -735,7 +735,7 @@ webidl.converters.WebSocketSendData = function (V) {
+       return V
+     }
+ 
+-    if (ArrayBuffer.isView(V) || isArrayBuffer(V)) {
++    if (ArrayBuffer.isView(V) || V instanceof ArrayBuffer) {
+       return V
+     }
+   }
